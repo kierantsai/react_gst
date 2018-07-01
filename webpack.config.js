@@ -1,4 +1,5 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 var webpack = require('webpack');
 
@@ -25,8 +26,18 @@ module.exports = {
             }
         ]
     },
+    devServer: {
+        contentBase: './dist',
+        port: '9000',
+        hot: true
+    },
     plugins: [
         new CleanWebpackPlugin(['dist']),
+        new HtmlWebpackPlugin({
+            title: 'GST Calculator',
+            template: './app/index.html'
+        }),
+        new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery'
