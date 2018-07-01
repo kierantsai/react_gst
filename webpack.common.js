@@ -26,11 +26,6 @@ module.exports = {
             }
         ]
     },
-    devServer: {
-        contentBase: './dist',
-        port: '9000',
-        hot: true
-    },
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
