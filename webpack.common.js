@@ -30,7 +30,8 @@ module.exports = {
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             title: 'GST Calculator',
-            template: './app/index.html'
+            template: './app/index.html',
+            favicon: './public/favicon.ico'
         }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({
