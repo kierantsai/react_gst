@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var webpack = require('webpack');
 
 module.exports = {
@@ -11,11 +12,24 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js'
     },
+    optimization: {
+        splitChunks: {
+            chunks: 'all'
+        }
+    },
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: [ 'style-loader', 'css-loader']
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: {
+
+                        }
+                    },
+                    'css-loader'
+                ]
             },
             {
                 test: /\.(woff|woff2|eot|ttf|svg)$/,
@@ -50,6 +64,10 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery'
+        }),
+        new MiniCssExtractPlugin({
+            fileName: '[name].css',
+            chunkFilename: '[id].css'
         }),
         new WorkboxPlugin.GenerateSW({
             clientsClaim: true,
