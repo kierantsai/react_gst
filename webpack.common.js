@@ -1,16 +1,16 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var webpack = require('webpack');
 
 module.exports = {
     entry: "./app/index.js",
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js'
+        filename: '[name].js',
+        clean: true
     },
     optimization: {
         splitChunks: {
@@ -20,14 +20,9 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/,
+                test: /\.css$/i,
                 use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-
-                        }
-                    },
+                    MiniCssExtractPlugin.loader,
                     'css-loader'
                 ]
             },
@@ -43,32 +38,30 @@ module.exports = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             title: 'GST Calculator',
             template: './app/index.html',
             favicon: './public/favicon.ico',
             inject: true
         }),
-        new CopyPlugin([
-            {
-                from: './public/manifest.json',
-                to: './manifest.json'
-            },
-            {
-                from: './public/gst.png',
-                to: './gst.png'
-            }
-        ]),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: './public/manifest.json',
+                    to: './manifest.json'
+                },
+                {
+                    from: './public/gst.png',
+                    to: './gst.png'
+                }
+            ]
+        }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery'
         }),
-        new MiniCssExtractPlugin({
-            fileName: '[name].css',
-            chunkFilename: '[id].css'
-        }),
+        new MiniCssExtractPlugin(),
         new WorkboxPlugin.GenerateSW({
             clientsClaim: true,
             skipWaiting: true

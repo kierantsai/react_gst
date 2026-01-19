@@ -1,6 +1,6 @@
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
-import 'bootstrap/js/button.js';
+// import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap-theme.css';
+// import 'bootstrap/js/button.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
