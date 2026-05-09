@@ -1,23 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import * as styles from './GstCalculatorHeader.module.css';
 
-export default class GstCalculatorHeader extends React.Component {
-    render() {
-        return (
-            <div className="row">
-                <div className="form-group col-md-3 col-sm-4">
-                    <label className="sr-only">Price excluding GST</label>
-                    <p className="form-control-static">Price excl. GST</p>
-                </div>
-                <div className="form-group col-md-2 col-sm-2">
-                    <label className="sr-only">GST</label>
-                    <p className="form-control-static">GST</p>
-                </div>
-                <div className="form-group col-md-3 col-sm-3">
-                    <label className="sr-only">Price including GST</label>
-                    <p className="form-control-static">Price incl. GST</p>
-                </div>
+export default function GstCalculatorHeader() {
+    return (
+        <>
+            <div className={styles.PriceExcludingGST}>
+                <label>Price excl. GST</label>
             </div>
-        );
-    }
+            <div className={styles.GST}>
+                <label>GST</label>
+            </div>
+            <div className={styles.PriceIncludingGST}>
+                <label>Price incl. GST</label>
+            </div>
+        </>
+    );
 }

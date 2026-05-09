@@ -1,28 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import * as styles from './GstCalculatorFooter.module.css';
 
 var currencyFormatter = new Intl.NumberFormat('en-NZ', { style: 'currency', currency: 'NZD' });
 
-export default class GstCalculatorFooter extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return (
-            <div className="row">
-                <div className="form-group col-md-3 col-sm-4">
-                    <label className="sr-only">Total excluding GST</label>
-                    <p className="form-control-static">{currencyFormatter.format(this.props.totalExcludingGST)}</p>
-                </div>
-                <div className="form-group col-md-2 col-sm-2">
-                    <label className="sr-only">GST</label>
-                    <p className="form-control-static">{currencyFormatter.format(this.props.totalGST)}</p>
-                </div>
-                <div className="form-group col-md-3 col-sm-4">
-                    <label className="sr-only">Total including GST</label>
-                    <p className="form-control-static">{currencyFormatter.format(this.props.totalIncludingGST)}</p>
-                </div>
+export default function GstCalculatorFooter({totalExcludingGST, totalGST, totalIncludingGST}) {
+    return (
+        <>
+            <div className={styles.PriceExcludingGST}>
+                <p className="form-control-static">{currencyFormatter.format(totalExcludingGST)}</p>
             </div>
-        );
-    }
+            <div className={styles.GST}>
+                <p className="form-control-static">{currencyFormatter.format(totalGST)}</p>
+            </div>
+            <div className={styles.PriceIncludingGST}>
+                <p className="form-control-static">{currencyFormatter.format(totalIncludingGST)}</p>
+            </div>
+        </>
+    );
 }

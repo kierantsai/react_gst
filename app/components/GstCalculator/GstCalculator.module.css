@@ -1,0 +1,19 @@
+.GstCalculator {
+    display: flex;
+    justify-content: center;
+
+    input[type="number"] {
+        width: 120px;
+    }
+}
+
+.Grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(min-content, max-content));
+    column-gap: 10px;
+    overflow: auto;
+}
+
+.Title {
+    text-align: center;
+}
