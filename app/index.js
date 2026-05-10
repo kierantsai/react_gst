@@ -1,22 +1,10 @@
-// import 'bootstrap/dist/css/bootstrap.css';
-// import 'bootstrap/dist/css/bootstrap-theme.css';
-// import 'bootstrap/js/button.js';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux'
-import appReducer from './reducers';
+import { store } from './store';
 
-import { GstCalculatorContainer } from './containers/GstCalculatorContainer/GstCalculatorContainer';
-
-if (module.hot){
-    module.hot.accept('./reducers.js', function() {
-        console.log('Accepting the updated reducer module!');
-    });
-    module.hot.accept('./actions.js', function() {
-        console.log('Accepting the updated actions module!');
-    });
-}
+import GstCalculator from './components/GstCalculator/GstCalculator';
 
 if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
     window.addEventListener('load', () => {
@@ -28,16 +16,12 @@ if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
     });
 }
 
-//Store
-
-let store = createStore(appReducer);
-
 (function() {
     const root = createRoot(document.getElementById('gstCalculator'));
     root.render(
         
         <Provider store={store}>
-            <GstCalculatorContainer />
+            <GstCalculator />
         </Provider>
     );
 })()

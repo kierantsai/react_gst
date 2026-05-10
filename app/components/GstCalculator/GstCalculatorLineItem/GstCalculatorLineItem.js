@@ -6,7 +6,6 @@ var currencyFormatter = new Intl.NumberFormat('en-NZ', { style: 'currency', curr
 
 export default function GstCalculatorLineItem(props) {
 
-
     var handlePriceExcludingGSTChange = (event) => {
         props.onSetPriceExcludingGST(event.target.value, props.index);
     };
@@ -26,14 +25,14 @@ export default function GstCalculatorLineItem(props) {
     return (
         <>
             <div className={styles.PriceExcludingGST}>
-                <input type="number" placeholder="excluding gst" step="0.01" name="priceExcludingGST" value={props.lineItem.get('priceExcludingGST')?.toFixed(2)}
+                <input type="number" placeholder="excluding gst" step="0.01" name="priceExcludingGST" value={props.lineItem.priceExcludingGST?.toFixed(2)}
                     onChange={handlePriceExcludingGSTChange}/>
             </div>
             <div className={styles.GST}>
-                <p>{currencyFormatter.format(props.lineItem.get('GST')?.toFixed(2))}</p>
+                <p>{currencyFormatter.format(props.lineItem.GST?.toFixed(2))}</p>
             </div>
             <div className={styles.PriceIncludingGST}>
-                <input type="number" placeholder="including gst" step="0.01" name="priceIncludingGST" value={props.lineItem.get('priceIncludingGST')?.toFixed(2)}
+                <input type="number" placeholder="including gst" step="0.01" name="priceIncludingGST" value={props.lineItem.priceIncludingGST?.toFixed(2)}
                     onChange={handlePriceIncludingGSTChange}/>
             </div>
             <div className={styles.ButtonGroup}>

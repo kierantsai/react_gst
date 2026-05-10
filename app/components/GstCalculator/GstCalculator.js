@@ -1,5 +1,12 @@
-import React from 'react';
+import React, { use } from 'react';
 import ReactDOM from 'react-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+    priceExcludingGSTSet,
+    PriceIncludingGSTSet,
+    lineItemAdded,
+    lineItemRemoved
+} from '../../calculatorSlice';
 import GstCalculatorHeader from '../../components/GstCalculator/GstCalculatorHeader/GstCalculatorHeader';
 import GstCalculatorFooter from '../../components/GstCalculator/GstCalculatorFooter/GstCalculatorFooter';
 import GstCalculatorLineItem from '../../components/GstCalculator/GstCalculatorLineItem/GstCalculatorLineItem';
@@ -7,38 +14,41 @@ import * as styles from './GstCalculator.module.css';
 
 export default function GstCalculator (props) {
 
+    const lineItems = useSelector((state) => state.gstCalculator.lineItems);
+    const dispatch = useDispatch();
+    
     var totalExcludingGST = () => {
             var total = 0.0;
-            for(var i = 0; i < props.lineItems.size; i++){
-                total = total + props.lineItems.getIn([i, 'priceExcludingGST']);
+            for(var i = 0; i < lineItems.size; i++){
+                total = total + lineItems[i].priceExcludingGST;
             }
             return total;
         };
 
     var totalGST = () => {
             var total = 0.0;
-            for(var i = 0; i < props.lineItems.size; i++){
-                total = total + props.lineItems.getIn([i, 'GST']);
+            for(var i = 0; i < lineItems.size; i++){
+                total = total + lineItems[i].GST;
             }
             return total;
         };
 
     var totalIncludingGST = () => {
             var total = 0.0;
-            for(var i = 0; i < props.lineItems.size; i++){
-                total = total + props.lineItems.getIn([i, 'priceIncludingGST']);
+            for(var i = 0; i < lineItems.size; i++){
+                total = total + lineItems[i].priceIncludingGST;
             }
             return total;
         };
 
-    const lineItems = props.lineItems.map(
+    const gstCalculatorLineItems = lineItems.map(
         (lineItem, index) =>
             <GstCalculatorLineItem key={index} index={index} lineItem={lineItem}
-                    onSetPriceExcludingGST={props.onSetPriceExcludingGST}
-                    onSetPriceIncludingGST={props.onSetPriceIncludingGST}
-                    onAddLineItem={props.onAddLineItem}
-                    onRemoveLineItem={props.onRemoveLineItem}
-                    disableRemoveButton={props.lineItems.size <= 1} />
+                    onSetPriceExcludingGST={e => dispatch(priceExcludingGSTSet({ index, value: e}))}
+                    onSetPriceIncludingGST={e => dispatch(PriceIncludingGSTSet({ index, value: e}))}
+                    onAddLineItem={e => dispatch(lineItemAdded(index))}
+                    onRemoveLineItem={e => dispatch(lineItemRemoved(index))}
+                    disableRemoveButton={lineItems.size <= 1} />
         );
     return (
         <>
@@ -46,7 +56,7 @@ export default function GstCalculator (props) {
             <div className={styles.GstCalculator}>
                 <div className={styles.Grid}>
                     <GstCalculatorHeader />
-                    {lineItems}
+                    {gstCalculatorLineItems}
                     <GstCalculatorFooter totalExcludingGST={totalExcludingGST()} totalGST={totalGST()} totalIncludingGST={totalIncludingGST()}/>
                 </div>
             </div>
